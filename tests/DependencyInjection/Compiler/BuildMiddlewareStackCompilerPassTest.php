@@ -7,6 +7,7 @@ use BabDev\WebSocketBundle\DependencyInjection\Compiler\BuildMiddlewareStackComp
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Symfony\Component\DependencyInjection\Argument\AbstractArgument;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 final class BuildMiddlewareStackCompilerPassTest extends AbstractCompilerPassTestCase
 {
@@ -24,7 +25,7 @@ final class BuildMiddlewareStackCompilerPassTest extends AbstractCompilerPassTes
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'middleware.outer',
             0,
-            'middleware.inner',
+            new Reference('middleware.inner'),
         );
     }
 

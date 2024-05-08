@@ -186,7 +186,7 @@ final class BabDevWebSocketExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'babdev_websocket_server.server.server_middleware.initialize_session',
             1,
-            'session.factory.test',
+            new Reference('session.factory.test'),
         );
 
         $this->assertContainerBuilderNotHasService('babdev_websocket_server.server.server_middleware.reject_blocked_ip_address');
@@ -215,13 +215,13 @@ final class BabDevWebSocketExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'babdev_websocket_server.server.server_middleware.initialize_session',
             1,
-            'babdev_websocket_server.server.session.factory',
+            new Reference('babdev_websocket_server.server.session.factory'),
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'babdev_websocket_server.server.session.factory',
             0,
-            'session.storage.factory.test',
+            new Reference('session.storage.factory.test'),
         );
 
         $this->assertContainerBuilderNotHasService('babdev_websocket_server.server.server_middleware.reject_blocked_ip_address');
@@ -249,19 +249,19 @@ final class BabDevWebSocketExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'babdev_websocket_server.server.server_middleware.initialize_session',
             1,
-            'babdev_websocket_server.server.session.factory',
+            new Reference('babdev_websocket_server.server.session.factory'),
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'babdev_websocket_server.server.session.factory',
             0,
-            'babdev_websocket_server.server.session.storage.factory.read_only_native',
+            new Reference('babdev_websocket_server.server.session.storage.factory.read_only_native'),
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'babdev_websocket_server.server.session.storage.factory.read_only_native',
             3,
-            'session.handler.test',
+            new Reference('session.handler.test'),
         );
 
         $this->assertContainerBuilderNotHasService('babdev_websocket_server.server.server_middleware.reject_blocked_ip_address');
