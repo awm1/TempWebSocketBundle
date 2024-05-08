@@ -42,7 +42,7 @@ final class AttributeLoader extends AttributeClassLoader
         $collection->addResource(new FileResource($class->getFileName()));
 
         /** @var \ReflectionAttribute<AsMessageHandler>|null $attribute */
-        $attribute = $class->getAttributes(AsMessageHandler::class, \ReflectionAttribute::IS_INSTANCEOF)[0] ?? null;
+        $attribute = $class->getAttributes($this->routeAnnotationClass, \ReflectionAttribute::IS_INSTANCEOF)[0] ?? null;
 
         if (!$attribute instanceof \ReflectionAttribute) {
             return $collection;
