@@ -10,13 +10,9 @@ Periodic managers are initialized during the `BabDev\WebSocketBundle\Event\Befor
 
 A manager must provide a unique name, these names are used in conjunction with the `BabDev\WebSocketBundle\PeriodicManager\PeriodicManagerRegistry`
 
-### `setLoop()`
-
-When managers are registered, they will be provided the event loop that is being used for the server process.
-
 ### `register()`
 
-The `register()` method is used to initialize the periodic manager.
+The `register()` method is used to initialize the periodic manager using the provided event loop.
 
 ### `cancelTimers()`
 
@@ -29,7 +25,6 @@ The `cancelTimers()` method is called during the `BabDev\WebSocketBundle\Event\A
 
 namespace App\WebSocket\PeriodicManager;
 
-use BabDev\WebSocketBundle\Exception\MissingLoop;
 use BabDev\WebSocketBundle\PeriodicManager\PeriodicManager;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -46,32 +41,18 @@ final class EchoPeriodicManager implements PeriodicManager, LoggerAwareInterface
         return 'echo'
     }
 
-    public function setLoop(LoopInterface $loop): void
+    public function register(LoopInterface $loop): void
     {
         $this->loop = $loop;
-    }
 
-    public function register(): void
-    {
         // Wrap the entire loop in try/catch to prevent fatal errors crashing the websocket server
         try {
-            if (null === $this->loop) {
-                throw new MissingLoop(sprintf('The event loop has not been registered in %s', self::class));
-            }
-
             // Register the timer to run every 15 seconds
             $this->loop->addPeriodicTimer(
                 15,
                 static function (): void {
                     echo 'This is a demo';
                 },
-            );
-        } catch (MissingLoopException $exception) {
-            $this->logger->error(
-                $exception->getMessage(),
-                [
-                    'exception' => $exception,
-                ],
             );
         } catch (\Throwable $exception) {
             $this->logger->error(

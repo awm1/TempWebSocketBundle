@@ -43,13 +43,6 @@ final class PingDoctrineDBALConnectionsPeriodicManagerTest extends TestCase
         parent::tearDown();
     }
 
-    public function testTheManagerIsNotRegisteredWhenTheLoopIsMissing(): void
-    {
-        $this->manager->register();
-
-        self::assertTrue($this->logger->hasErrorThatContains(sprintf('The event loop has not been registered in %s', PingDoctrineDBALConnectionsPeriodicManager::class)));
-    }
-
     public function testTheManagerIsRegistered(): void
     {
         /** @var MockObject&LoopInterface $loop */
@@ -59,8 +52,7 @@ final class PingDoctrineDBALConnectionsPeriodicManagerTest extends TestCase
             ->method('addPeriodicTimer')
             ->willReturn($this->createMock(TimerInterface::class));
 
-        $this->manager->setLoop($loop);
-        $this->manager->register();
+        $this->manager->register($loop);
     }
 
     public function testTheManagerPingsAllConnections(): void

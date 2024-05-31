@@ -57,11 +57,8 @@ final class PeriodicManagerSubscriberTest extends TestCase
         /** @var MockObject&PeriodicManager $manager */
         $manager = $this->createMock(PeriodicManager::class);
         $manager->expects(self::once())
-            ->method('setLoop')
+            ->method('register')
             ->with($loop);
-
-        $manager->expects(self::once())
-            ->method('register');
 
         $this->registry->method('getManagers')
             ->willReturn(['test' => $manager]);

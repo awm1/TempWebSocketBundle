@@ -31,11 +31,8 @@ final readonly class PeriodicManagerSubscriber implements EventSubscriberInterfa
 
     public function onBeforeRunServer(BeforeRunServer $event): void
     {
-        $loop = $event->loop;
-
         foreach ($this->registry->getManagers() as $manager) {
-            $manager->setLoop($loop);
-            $manager->register();
+            $manager->register($event->loop);
         }
     }
 }
