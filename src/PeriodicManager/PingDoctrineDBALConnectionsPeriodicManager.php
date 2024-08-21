@@ -8,9 +8,8 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
-use Symfony\Contracts\Service\ResetInterface;
 
-final class PingDoctrineDBALConnectionsPeriodicManager implements PeriodicManager, LoggerAwareInterface, ResetInterface
+final class PingDoctrineDBALConnectionsPeriodicManager implements PeriodicManager, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -47,14 +46,6 @@ final class PingDoctrineDBALConnectionsPeriodicManager implements PeriodicManage
     }
 
     public function cancelTimers(): void
-    {
-        $this->reset();
-    }
-
-    /**
-     * @internal
-     */
-    public function reset(): void
     {
         if (!$this->timer instanceof TimerInterface) {
             return;

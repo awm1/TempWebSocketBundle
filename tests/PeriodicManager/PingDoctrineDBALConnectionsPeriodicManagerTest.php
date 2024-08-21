@@ -38,7 +38,7 @@ final class PingDoctrineDBALConnectionsPeriodicManagerTest extends TestCase
 
     protected function tearDown(): void
     {
-        $this->manager->reset();
+        $this->manager->cancelTimers();
 
         parent::tearDown();
     }
