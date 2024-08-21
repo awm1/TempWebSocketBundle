@@ -28,14 +28,14 @@ final class AttributeLoader extends AttributeClassLoader
     public function load(mixed $class, ?string $type = null): RouteCollection
     {
         if (!class_exists($class)) {
-            throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
+            throw new \InvalidArgumentException(\sprintf('Class "%s" does not exist.', $class));
         }
 
         /** @var \ReflectionClass<AsMessageHandler> $class */
         $class = new \ReflectionClass($class);
 
         if ($class->isAbstract()) {
-            throw new \InvalidArgumentException(sprintf('Attributes from class "%s" cannot be read as it is abstract.', $class->getName()));
+            throw new \InvalidArgumentException(\sprintf('Attributes from class "%s" cannot be read as it is abstract.', $class->getName()));
         }
 
         $collection = new RouteCollection();
@@ -59,7 +59,7 @@ final class AttributeLoader extends AttributeClassLoader
 
         foreach ($requirements as $placeholder => $requirement) {
             if (\is_int($placeholder)) {
-                throw new \InvalidArgumentException(sprintf('A placeholder name must be a string (%d given). Did you forget to specify the placeholder key for the requirement "%s" of the route in "%s"?', $placeholder, $requirement, $class->getName()));
+                throw new \InvalidArgumentException(\sprintf('A placeholder name must be a string (%d given). Did you forget to specify the placeholder key for the requirement "%s" of the route in "%s"?', $placeholder, $requirement, $class->getName()));
             }
         }
 

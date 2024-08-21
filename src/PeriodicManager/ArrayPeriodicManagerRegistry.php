@@ -27,7 +27,7 @@ final class ArrayPeriodicManagerRegistry implements PeriodicManagerRegistry
     public function addManager(PeriodicManager $manager): void
     {
         if (isset($this->managers[$manager->getName()])) {
-            throw new ManagerAlreadyRegistered(sprintf('A manager named "%s" is already registered.', $manager->getName()));
+            throw new ManagerAlreadyRegistered(\sprintf('A manager named "%s" is already registered.', $manager->getName()));
         }
 
         $this->managers[$manager->getName()] = $manager;

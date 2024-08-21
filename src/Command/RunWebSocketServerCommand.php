@@ -44,7 +44,7 @@ final class RunWebSocketServerCommand extends Command
         /** @var string $uri */
         $uri = $input->getArgument('uri') ?: $this->uri;
 
-        $this->style->info(sprintf('Launching websocket server, listening on "%s"', $uri));
+        $this->style->info(\sprintf('Launching websocket server, listening on "%s"', $uri));
 
         $socketServer = $this->socketServerFactory->build($uri);
         $server = $this->serverFactory->build($socketServer);

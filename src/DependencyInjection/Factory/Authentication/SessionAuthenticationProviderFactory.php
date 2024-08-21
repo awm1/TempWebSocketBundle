@@ -32,7 +32,7 @@ final class SessionAuthenticationProviderFactory implements AuthenticationProvid
 
             $firewalls = new Parameter('security.firewalls');
         } else {
-            throw new InvalidArgumentException(sprintf('The "firewalls" config must be an array, a string, or null; "%s" given.', get_debug_type($config['firewalls'])));
+            throw new InvalidArgumentException(\sprintf('The "firewalls" config must be an array, a string, or null; "%s" given.', get_debug_type($config['firewalls'])));
         }
 
         $providerId = 'babdev_websocket_server.authentication.provider.session.default';

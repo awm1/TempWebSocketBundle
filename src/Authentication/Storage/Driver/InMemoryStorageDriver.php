@@ -30,7 +30,7 @@ final class InMemoryStorageDriver implements StorageDriver
     public function get(string $id): TokenInterface
     {
         if (!$this->has($id)) {
-            throw new TokenNotFound(sprintf('Token for ID "%s" not found.', $id));
+            throw new TokenNotFound(\sprintf('Token for ID "%s" not found.', $id));
         }
 
         return $this->tokens[$id];

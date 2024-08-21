@@ -21,7 +21,7 @@ final class RouterCacheWarmerTest extends TestCase
 
         $innerCacheWarmer->expects(self::once())
             ->method('warmUp')
-            ->with(sprintf('%s/%s', $cacheDir, $cacheFolder), null)
+            ->with(\sprintf('%s/%s', $cacheDir, $cacheFolder), null)
             ->willReturn([
                 UrlGenerator::class,
                 UrlMatcher::class,
@@ -44,7 +44,7 @@ final class RouterCacheWarmerTest extends TestCase
 
         $innerCacheWarmer->expects(self::once())
             ->method('warmUp')
-            ->with(sprintf('%s/%s', $cacheDir, $cacheFolder), sprintf('%s/%s', $buildDir, $cacheFolder))
+            ->with(\sprintf('%s/%s', $cacheDir, $cacheFolder), \sprintf('%s/%s', $buildDir, $cacheFolder))
             ->willReturn([
                 UrlGenerator::class,
                 UrlMatcher::class,

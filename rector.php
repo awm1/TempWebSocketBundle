@@ -2,7 +2,7 @@
 
 use Rector\Config\RectorConfig;
 use Rector\Php81\Rector\Array_\FirstClassCallableRector;
-use Rector\PHPUnit\CodeQuality\Rector\Class_\AddSeeTestAnnotationRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
@@ -19,7 +19,7 @@ return RectorConfig::configure()
          * Skip selected rules
          */
 
-        AddSeeTestAnnotationRector::class,
+        PreferPHPUnitThisCallRector::class,
 
         /*
          * Skip selected rules in selected files
