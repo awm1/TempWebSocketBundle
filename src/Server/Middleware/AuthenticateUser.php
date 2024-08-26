@@ -3,8 +3,10 @@
 namespace BabDev\WebSocketBundle\Server\Middleware;
 
 use BabDev\WebSocket\Server\Connection;
+use BabDev\WebSocket\Server\Connection\ClosesConnectionWithResponse;
 use BabDev\WebSocket\Server\ServerMiddleware;
 use BabDev\WebSocketBundle\Authentication\Authenticator;
+use BabDev\WebSocketBundle\Authentication\Exception\AuthenticationException;
 use BabDev\WebSocketBundle\Authentication\Storage\Exception\StorageError;
 use BabDev\WebSocketBundle\Authentication\Storage\Exception\TokenNotFound;
 use BabDev\WebSocketBundle\Authentication\Storage\TokenStorage;
@@ -16,6 +18,7 @@ use Psr\Log\LoggerAwareTrait;
  */
 final class AuthenticateUser implements ServerMiddleware, LoggerAwareInterface
 {
+    use ClosesConnectionWithResponse;
     use LoggerAwareTrait;
 
     public function __construct(
@@ -29,7 +32,13 @@ final class AuthenticateUser implements ServerMiddleware, LoggerAwareInterface
      */
     public function onOpen(Connection $connection): void
     {
-        $this->authenticator->authenticate($connection);
+        try {
+            $this->authenticator->authenticate($connection);
+        } catch (AuthenticationException $exception) {
+            $this->close($connection, 401);
+
+            throw $exception;
+        }
 
         $this->middleware->onOpen($connection);
     }

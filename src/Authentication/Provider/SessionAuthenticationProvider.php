@@ -3,6 +3,8 @@
 namespace BabDev\WebSocketBundle\Authentication\Provider;
 
 use BabDev\WebSocket\Server\Connection;
+use BabDev\WebSocket\Server\WebSocketException;
+use BabDev\WebSocketBundle\Authentication\Exception\AuthenticationException;
 use BabDev\WebSocketBundle\Authentication\Storage\TokenStorage;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -36,9 +38,19 @@ final class SessionAuthenticationProvider implements AuthenticationProvider, Log
         return $attributeStore->has('session') && $attributeStore->get('session') instanceof SessionInterface;
     }
 
+    /**
+     * @throws AuthenticationException if there was an error while trying to authenticate the user
+     */
     public function authenticate(Connection $connection): TokenInterface
     {
-        $token = $this->getToken($connection);
+        try {
+            $token = $this->getToken($connection);
+        } catch (WebSocketException $exception) {
+            // Out-of-the-box, we'll get a WebSocketException from our read-only session handler if there was an issue grabbing the session data, so focus only on the component's exceptions
+            $this->logger?->error('Could not authenticate user.', ['exception' => $exception]);
+
+            throw new AuthenticationException('Could not authenticate user.', previous: $exception);
+        }
 
         $storageId = $this->tokenStorage->generateStorageId($connection);
 

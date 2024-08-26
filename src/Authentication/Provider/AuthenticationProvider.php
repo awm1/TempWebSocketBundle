@@ -3,6 +3,7 @@
 namespace BabDev\WebSocketBundle\Authentication\Provider;
 
 use BabDev\WebSocket\Server\Connection;
+use BabDev\WebSocketBundle\Authentication\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 interface AuthenticationProvider
@@ -16,6 +17,8 @@ interface AuthenticationProvider
      * Attempts to authenticate the current connection.
      *
      * Implementations can assume this method will only be executed when supports() is true.
+     *
+     * @throws AuthenticationException if there was an error while trying to authenticate the user
      */
     public function authenticate(Connection $connection): TokenInterface;
 }
