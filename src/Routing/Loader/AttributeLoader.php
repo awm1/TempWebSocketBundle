@@ -17,7 +17,11 @@ final class AttributeLoader extends AttributeClassLoader
     {
         parent::__construct($env);
 
-        $this->setRouteAnnotationClass(AsMessageHandler::class);
+        if (method_exists($this, 'setRouteAttributeClass')) {
+            $this->setRouteAttributeClass(AsMessageHandler::class);
+        } else {
+            $this->setRouteAnnotationClass(AsMessageHandler::class);
+        }
     }
 
     /**
