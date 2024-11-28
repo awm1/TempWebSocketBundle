@@ -9,10 +9,29 @@
         "websocket server"
     ],
     "license": "MIT",
+    "repositories": [
+        {
+          "type": "package",
+          "package": {
+            "name": "babdev/websocket-server",
+            "version": "0.100",
+            "source": {
+              "url": "https://github.com/awm1/WebSocket-Server.git",
+              "type": "git",
+              "reference": "0.1"
+            },
+            "autoload": {
+              "classmap": [
+                ""
+              ]
+            }
+          }
+        }
+    ],
     "require": {
-        "php": "8.2.* || 8.3.* || 8.4.*",
+        "php": ">=8.1",
         "ext-pcntl": "*",
-        "babdev/websocket-server": "0.1.*",
+        "babdev/websocket-server": "0.100",
         "symfony/config": "^6.4 || ^7.1",
         "symfony/console": "^6.4 || ^7.1",
         "symfony/dependency-injection": "^6.4 || ^7.1",
